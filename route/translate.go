@@ -12,6 +12,7 @@ import (
 	_ "github.com/metatube-community/metatube-sdk-go/translate/google"
 	_ "github.com/metatube-community/metatube-sdk-go/translate/googlefree"
 	_ "github.com/metatube-community/metatube-sdk-go/translate/openai"
+	_ "github.com/metatube-community/metatube-sdk-go/translate/xiaoniu"
 )
 
 type translateQuery struct {
