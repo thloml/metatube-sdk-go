@@ -14,8 +14,6 @@ import (
 
 var _ translate.Translator = (*Tencent)(nil)
 
-const api = "https://tmt.tencentcloudapi.com"
-
 type Tencent struct {
 	SecretId  string `json:"tencent-secret-id"`
 	SecretKey string `json:"tencent-secret-key"`
