@@ -63,7 +63,6 @@ func (tx *Tencent) Translate(text, from, to string) (result string, err error) {
 	if err = json.Unmarshal([]byte(response.ToJsonString()), &data); err != nil {
 		return
 	}
-	fmt.Printf("%s", data.Response.TargetText)
 	result = data.Response.TargetText
 	return
 }
