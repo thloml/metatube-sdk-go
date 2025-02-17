@@ -211,6 +211,10 @@ github.com/stretchr/testify v1.10.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf
 github.com/temoto/robotstxt v1.1.1/go.mod h1:+1AmkuG3IYkh1kv0d2qEB9Le88ehNO0zwOr3ujewlOo=
 github.com/temoto/robotstxt v1.1.2 h1:W2pOjSJ6SWvldyEuiFXNxz3xZ8aiWX5LbfDiOFd7Fxg=
 github.com/temoto/robotstxt v1.1.2/go.mod h1:+1AmkuG3IYkh1kv0d2qEB9Le88ehNO0zwOr3ujewlOo=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1099 h1:4fQ53ORk6Eayw1H2kg43PoBnUuhGR6WRG6rtec/i3oI=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1099/go.mod h1:r5r4xbfxSaeR04b166HGsBa/R4U3SueirEUpXGuw+Q0=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tmt v1.0.1099 h1:bxMY3lqFEAiy8TAuhpQicgJhxomkzNUAKUZgVB9LD9o=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tmt v1.0.1099/go.mod h1:7NcxTE3JGW20pnbvkChretOKy1Dna2nOEBjse3xyKJM=
 github.com/tetratelabs/wazero v1.8.2 h1:yIgLR/b2bN31bjxwXHD8a3d+BogigR952csSDdLYEv4=
 github.com/tetratelabs/wazero v1.8.2/go.mod h1:yAI0XTsMBhREkM/YDAK/zNou3GoiAce1P6+rp/wQhjs=
 github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS4MhqMhdFk5YI=

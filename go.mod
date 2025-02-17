@@ -29,6 +29,8 @@ require (
 	github.com/projectdiscovery/utils v0.4.8
 	github.com/robertkrimen/otto v0.5.1
 	github.com/stretchr/testify v1.10.0
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1099
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tmt v1.0.1099
 	github.com/zijiren233/google-translator v1.0.1
 	github.com/zijiren233/openai-translator v0.2.1
 	go.eigsys.de/gin-cachecontrol/v2 v2.2.0
