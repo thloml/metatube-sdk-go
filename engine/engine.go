@@ -1,9 +1,13 @@
 package engine
 
 import (
+	"fmt"
+	"github.com/metatube-community/metatube-sdk-go/translate"
+	"github.com/metatube-community/metatube-sdk-go/translate/openaigen"
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 	"time"
 
@@ -32,6 +36,7 @@ type Engine struct {
 	// Host:Providers Map
 	actorHostProviders map[string][]mt.ActorProvider
 	movieHostProviders map[string][]mt.MovieProvider
+	translator         translate.Translator
 }
 
 func New(db *gorm.DB, opts ...Option) *Engine {
@@ -39,6 +44,15 @@ func New(db *gorm.DB, opts ...Option) *Engine {
 		db:      db,
 		name:    DefaultEngineName,
 		timeout: DefaultRequestTimeout,
+		translator: translate.New("openaigen", func(v any) error {
+			// 从配置加载 OpenAIGen 参数
+			config := v.(*openaigen.OpenAIGen)
+			config.Url = os.Getenv("OPENAIGEN_URL")
+			config.Auth = os.Getenv("OPENAIGEN_AUTH")
+			config.Model = os.Getenv("OPENAIGEN_MODEL")
+			fmt.Println(config)
+			return nil
+		}),
 	}
 	// apply options
 	for _, opt := range opts {

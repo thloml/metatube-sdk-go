@@ -221,6 +221,17 @@ func (e *Engine) getMovieInfoWithCallback(provider mt.MovieProvider, id string, 
 	// delayed info auto-save.
 	defer func() {
 		if err == nil && info.Valid() {
+			// 新增翻译逻辑
+			if e.translator != nil {
+				// 翻译标题
+				if titleZh, err := e.translator.Translate(info.Title, "auto", "zh"); err == nil {
+					info.TitleZh = titleZh
+				}
+				// 翻译摘要
+				if summaryZh, err := e.translator.Translate(info.Summary, "auto", "zh"); err == nil {
+					info.SummaryZh = summaryZh
+				}
+			}
 			e.db.Clauses(clause.OnConflict{
 				UpdateAll: true,
 			}).Create(info) // ignore error
