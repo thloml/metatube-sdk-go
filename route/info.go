@@ -55,7 +55,6 @@ func getInfo(app *engine.Engine, typ infoType) gin.HandlerFunc {
 			abortWithError(c, err)
 			return
 		}
-
 		c.JSON(http.StatusOK, &responseMessage{Data: info})
 	}
 }

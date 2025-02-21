@@ -37,8 +37,7 @@ type Messages []Message
 func (oa *OpenAIGen) Translate(q, source, target string) (result string, err error) {
 	prompt := "将以下文本翻译成中文，并直接输出：" + q
 	requestBody := Request{
-		Prompt: prompt,
-		Model:  oa.Model,
+		Model: oa.Model,
 		Messages: Messages{
 			{
 				Role:    "user",
