@@ -65,14 +65,12 @@ func (m *MovieReviewDetail) Valid() bool {
 }
 
 type MovieInfo struct {
-	ID        string `json:"id" gorm:"primaryKey"`
-	Number    string `json:"number"`
-	Title     string `json:"title"`
-	TitleZh   string `json:"title_zh"`
-	Summary   string `json:"summary"`
-	SummaryZh string `json:"summary_zh"`
-	Provider  string `json:"provider" gorm:"primaryKey"`
-	Homepage  string `json:"homepage"`
+	ID       string `json:"id" gorm:"primaryKey"`
+	Number   string `json:"number"`
+	Title    string `json:"title"`
+	Summary  string `json:"summary"`
+	Provider string `json:"provider" gorm:"primaryKey"`
+	Homepage string `json:"homepage"`
 
 	Director string         `json:"director"`
 	Actors   pq.StringArray `json:"actors" gorm:"type:text[]"`
