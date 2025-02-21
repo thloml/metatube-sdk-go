@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/metatube-community/metatube-sdk-go/translate"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -49,7 +49,7 @@ func (oa *OpenAIGen) Translate(q, source, target string) (result string, err err
 	if err != nil {
 		return "", fmt.Errorf("failed to marshal request body: %v", err)
 	}
-	req, err := http.NewRequest("POST", oa.Url+"/v1/chat/completions", bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest(http.MethodPost, oa.Url+"/v1/chat/completions", bytes.NewBuffer(jsonData))
 	if err != nil {
 		return "", fmt.Errorf("failed to create request: %v", err)
 	}
@@ -61,7 +61,7 @@ func (oa *OpenAIGen) Translate(q, source, target string) (result string, err err
 		return "", fmt.Errorf("failed to send request: %v", err)
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", fmt.Errorf("failed to read response body: %v", err)
 	}

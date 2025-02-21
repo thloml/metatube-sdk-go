@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"strings"
 
+	tmt "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tmt/v20180321"
+
 	"github.com/metatube-community/metatube-sdk-go/translate"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
-	tmt "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/tmt/v20180321"
 )
 
 var _ translate.Translator = (*Tencent)(nil)
