@@ -226,10 +226,16 @@ func (e *Engine) getMovieInfoWithCallback(provider mt.MovieProvider, id string, 
 				// 翻译标题
 				if titleZh, err := e.translator.Translate(info.Title, "auto", "zh"); err == nil {
 					info.Title = titleZh
+				} else {
+					e.logger.Printf("title translate error: %v", err)
+					return
 				}
 				// 翻译摘要
 				if summaryZh, err := e.translator.Translate(info.Summary, "auto", "zh"); err == nil {
 					info.Summary = summaryZh
+				} else {
+					e.logger.Printf("summary translate error: %v", err)
+					return
 				}
 			}
 			e.db.Clauses(clause.OnConflict{
