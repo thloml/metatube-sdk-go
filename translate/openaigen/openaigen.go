@@ -38,6 +38,7 @@ func (oa *OpenAIGen) Translate(q, source, target string) (result string, err err
 	if q == "" {
 		return "", nil
 	}
+	fmt.Printf("translate to chinese: " + q)
 	prompt := "将以下文本翻译成中文，并直接输出：" + q
 	requestBody := Request{
 		Model: oa.Model,
