@@ -23,7 +23,6 @@ UNIX_ARCH_LIST = \
 	darwin-amd64 \
 	darwin-amd64-v3 \
 	darwin-arm64 \
-	freebsd-386 \
 	freebsd-amd64 \
 	freebsd-amd64-v3 \
 	freebsd-arm64 \
@@ -36,8 +35,6 @@ UNIX_ARCH_LIST = \
 	linux-armv7 \
 	linux-ppc64le \
 	linux-s390x \
-	netbsd-amd64 \
-	netbsd-amd64-v3 \
 	openbsd-amd64 \
 	openbsd-amd64-v3
 
@@ -59,9 +56,6 @@ darwin-amd64-v3:
 
 darwin-arm64:
 	GOARCH=arm64 GOOS=darwin $(GO_BUILD) -o $(BUILD_DIR)/$(SERVER_NAME)-$@ $(SERVER_CODE)
-
-freebsd-386:
-	GOARCH=386 GOOS=freebsd $(GO_BUILD) -o $(BUILD_DIR)/$(SERVER_NAME)-$@ $(SERVER_CODE)
 
 freebsd-amd64:
 	GOARCH=amd64 GOOS=freebsd $(GO_BUILD) -o $(BUILD_DIR)/$(SERVER_NAME)-$@ $(SERVER_CODE)
@@ -98,12 +92,6 @@ linux-ppc64le:
 
 linux-s390x:
 	GOARCH=s390x GOOS=linux $(GO_BUILD) -o $(BUILD_DIR)/$(SERVER_NAME)-$@ $(SERVER_CODE)
-
-netbsd-amd64:
-	GOARCH=amd64 GOOS=netbsd $(GO_BUILD) -o $(BUILD_DIR)/$(SERVER_NAME)-$@ $(SERVER_CODE)
-
-netbsd-amd64-v3:
-	GOARCH=amd64 GOOS=netbsd GOAMD64=v3 $(GO_BUILD) -o $(BUILD_DIR)/$(SERVER_NAME)-$@ $(SERVER_CODE)
 
 openbsd-amd64:
 	GOARCH=amd64 GOOS=openbsd $(GO_BUILD) -o $(BUILD_DIR)/$(SERVER_NAME)-$@ $(SERVER_CODE)

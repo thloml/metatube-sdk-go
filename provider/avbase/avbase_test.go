@@ -11,6 +11,7 @@ func TestAVBase_GetMovieInfoByID(t *testing.T) {
 		"prestige:ABP-588",
 		"tameike:MEYD-856",
 		"SSIS-354",
+		"glory:GVH-186",
 	})
 }
 
@@ -19,5 +20,6 @@ func TestAVBase_SearchMovie(t *testing.T) {
 		"ABP-588",
 		"MEYD-856",
 		"SSIS-354",
+		"HMN",
 	})
 }

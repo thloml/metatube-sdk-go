@@ -11,6 +11,7 @@ import (
 
 	"github.com/metatube-community/metatube-sdk-go/database"
 	"github.com/metatube-community/metatube-sdk-go/engine"
+	"github.com/metatube-community/metatube-sdk-go/internal/envconfig"
 	"github.com/metatube-community/metatube-sdk-go/route"
 	"github.com/metatube-community/metatube-sdk-go/route/auth"
 )
@@ -81,10 +82,20 @@ func Router(names ...string) *gin.Engine {
 		opts = append(opts, engine.WithEngineName(name))
 	}
 
+	// // set actor provider configs if any
+	for provider, config := range envconfig.ActorProviderConfigs.Iterator() {
+		opts = append(opts, engine.WithActorProviderConfig(provider, config))
+	}
+
+	// set movie provider configs if any
+	for provider, config := range envconfig.MovieProviderConfigs.Iterator() {
+		opts = append(opts, engine.WithMovieProviderConfig(provider, config))
+	}
+
 	app := engine.New(db, opts...)
 
 	// always enable auto migrate for sqlite DB
-	if app.DBType() == database.Sqlite {
+	if app.DBDriver() == database.Sqlite {
 		Config.DBAutoMigrate = true
 	}
 	if err = app.DBAutoMigrate(Config.DBAutoMigrate); err != nil {

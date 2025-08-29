@@ -5,6 +5,8 @@ import (
 	"net/url"
 	"time"
 
+	"golang.org/x/text/language"
+
 	"github.com/metatube-community/metatube-sdk-go/model"
 )
 
@@ -17,6 +19,9 @@ type Provider interface {
 
 	// SetPriority sets the provider priority to the given value.
 	SetPriority(v float64)
+
+	// Language returns the primary language supported by the provider.
+	Language() language.Tag
 
 	// URL returns the base url of the provider.
 	URL() *url.URL
@@ -85,4 +90,18 @@ type Fetcher interface {
 type RequestTimeoutSetter interface {
 	// SetRequestTimeout sets timeout for HTTP requests.
 	SetRequestTimeout(timeout time.Duration)
+}
+
+type Config interface {
+	Has(string) bool
+	GetString(string) (string, error)
+	GetBool(string) (bool, error)
+	GetInt64(string) (int64, error)
+	GetFloat64(string) (float64, error)
+	GetDuration(string) (time.Duration, error)
+}
+
+type ConfigSetter interface {
+	// SetConfig sets any additional configs for Provider.
+	SetConfig(config Config) error
 }
