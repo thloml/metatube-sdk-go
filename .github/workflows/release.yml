@@ -45,5 +45,5 @@ jobs:
           files: build/*
           draft: false
           prerelease: false
-          repository: metatube-community/metatube-server-releases
+          repository: thloml/metatube-sdk-go
           token: ${{ secrets.ORG_PAT }}
