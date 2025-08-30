@@ -3,11 +3,11 @@ package openaigen
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/metatube-community/metatube-sdk-go/translate"
 	"io"
 	"net/http"
+	"strings"
 )
 
 var _ translate.Translator = (*OpenAIGen)(nil)
@@ -55,30 +55,87 @@ func (oa *OpenAIGen) Translate(q, source, target string) (result string, err err
 	}
 	req, err := http.NewRequest(http.MethodPost, oa.Url+"/v1/chat/completions", bytes.NewBuffer(jsonData))
 	if err != nil {
-		return "", fmt.Errorf("failed to create request: %v", err)
+		fmt.Printf("failed to create request: %v", err)
+		return "无法翻译-", nil
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+oa.Auth)
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return "", fmt.Errorf("failed to send request: %v", err)
+		fmt.Printf("failed to send request: %v", err)
+		return "无法翻译-", nil
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", fmt.Errorf("failed to read response body: %v", err)
+		fmt.Printf("failed to read response body: %v", err)
+		return "无法翻译-" + q, nil
 	}
 	var response Resp
 	if err := json.Unmarshal(body, &response); err != nil {
-		return "", fmt.Errorf("failed to unmarshal response: %v", err)
+		fmt.Printf("failed to unmarshal response: %v", err)
+		return "无法翻译-" + q, nil
 	}
 	if len(response.Choices) > 0 {
-		return response.Choices[0].Message.Content, nil
+		translated := response.Choices[0].Message.Content
+		return oa.postProcessTranslation(q, translated), nil
 	}
-	return "", errors.New("no response from Tencent AI")
+	return "无法翻译-" + q, nil
 }
 
 func init() {
 	translate.Register(&OpenAIGen{})
+}
+func (oa *OpenAIGen) postProcessTranslation(original, translated string) string {
+	// 规则4: 如果翻译内容包含"无法提供"
+	if containsUnableToProvide(translated) {
+		return "无法翻译-" + original
+	}
+
+	// 规则5: 如果翻译内容包含"抱歉"和"无法"
+	if containsApologyAndUnable(translated) {
+		return "无法翻译-" + original
+	}
+
+	// 规则1, 2, 3: 删除指定模式的内容
+	processed := removePrefixPatterns(translated)
+
+	return processed
+}
+func containsUnableToProvide(text string) bool {
+	return strings.Contains(text, "无法提供")
+}
+
+func containsApologyAndUnable(text string) bool {
+	return strings.Contains(text, "抱歉") && strings.Contains(text, "无法")
+}
+
+func removePrefixPatterns(text string) string {
+	// 删除从 "以下是" 开始到 "翻译：" 结束的内容
+	text = removePatternBetween(text, "以下是", "翻译：")
+
+	// 删除从 "以下是" 开始到 "文本：" 结束的内容
+	text = removePatternBetween(text, "以下是", "文本：")
+
+	// 删除从 "请注意，"后续的内容
+	if idx := strings.Index(text, "请注意，"); idx != -1 {
+		text = text[:idx]
+	}
+
+	return strings.TrimSpace(text)
+}
+
+func removePatternBetween(text, start, end string) string {
+	startIdx := strings.Index(text, start)
+	if startIdx == -1 {
+		return text
+	}
+
+	endIdx := strings.Index(text[startIdx:], end)
+	if endIdx == -1 {
+		return text
+	}
+
+	return text[:startIdx] + text[startIdx+endIdx+len(end):]
 }
