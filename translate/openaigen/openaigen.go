@@ -104,7 +104,13 @@ func (oa *OpenAIGen) postProcessTranslation(original, translated string) string 
 	return processed
 }
 func containsUnableToProvide(text string) bool {
-	return strings.Contains(text, "无法提供")
+	if strings.Contains(text, "无法提供") {
+		return true
+	}
+	if strings.Contains(text, "无法") && strings.Contains(text, "翻译") {
+		return true
+	}
+	return false
 }
 
 func containsApologyAndUnable(text string) bool {
@@ -120,6 +126,10 @@ func removePrefixPatterns(text string) string {
 
 	// 删除从 "请注意，"后续的内容
 	if idx := strings.Index(text, "请注意，"); idx != -1 {
+		text = text[:idx]
+	}
+	// 删除从 "注，"后续的内容
+	if idx := strings.Index(text, "注，"); idx != -1 {
 		text = text[:idx]
 	}
 
