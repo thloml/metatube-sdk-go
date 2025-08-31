@@ -119,6 +119,12 @@ func containsUnableToProvide(text string) bool {
 	if strings.Contains(text, "不合适") && strings.Contains(text, "翻译") {
 		return true
 	}
+	if strings.Contains(text, "对不起") && strings.Contains(text, "协助") {
+		return true
+	}
+	if strings.Contains(text, "对不起") && strings.Contains(text, "其他问题") {
+		return true
+	}
 	return false
 }
 
