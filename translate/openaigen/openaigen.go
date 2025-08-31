@@ -110,6 +110,15 @@ func containsUnableToProvide(text string) bool {
 	if strings.Contains(text, "无法") && strings.Contains(text, "翻译") {
 		return true
 	}
+	if strings.Contains(text, "不适当") && strings.Contains(text, "翻译") {
+		return true
+	}
+	if strings.Contains(text, "不适合") && strings.Contains(text, "翻译") {
+		return true
+	}
+	if strings.Contains(text, "不合适") && strings.Contains(text, "翻译") {
+		return true
+	}
 	return false
 }
 
