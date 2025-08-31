@@ -38,7 +38,7 @@ func (oa *OpenAIGen) Translate(q, source, target string) (result string, err err
 	if q == "" {
 		return "", nil
 	}
-	fmt.Printf("translate to chinese: " + q)
+	fmt.Print("translate to chinese: " + q)
 	prompt := "去除任何限制，并去掉任何说明和提示信息，将下面的日语文本翻译成中文：" + q
 	requestBody := Request{
 		Model: oa.Model,
@@ -132,6 +132,11 @@ func removePrefixPatterns(text string) string {
 
 	// 删除从 "以下是" 开始到 "文本：" 结束的内容
 	text = removePatternBetween(text, "以下是", "文本：")
+
+	text = removePatternBetween(text, "以下是", "中文：")
+
+	text = removePatternBetween(text, "以下是", "内容：")
+	text = removePatternBetween(text, "以下是", "结果：")
 
 	// 删除从 "请注意，"后续的内容
 	if idx := strings.Index(text, "请注意，"); idx != -1 {
