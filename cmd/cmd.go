@@ -14,6 +14,8 @@ import (
 	"github.com/metatube-community/metatube-sdk-go/internal/envconfig"
 	"github.com/metatube-community/metatube-sdk-go/route"
 	"github.com/metatube-community/metatube-sdk-go/route/auth"
+
+	"github.com/metatube-community/metatube-sdk-go/task"
 )
 
 var Config = &struct {
@@ -106,6 +108,9 @@ func Router(names ...string) *gin.Engine {
 	if Config.Token != "" {
 		token = auth.Token(Config.Token)
 	}
+
+	task.StartScheduledTasks(db, app)
+	//task.processNumberPrefix(db, app, "RCTD")
 
 	return route.New(app, token)
 }

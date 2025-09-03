@@ -126,3 +126,14 @@ func (m *MovieInfo) ToSearchResult() *MovieSearchResult {
 		ReleaseDate: m.ReleaseDate,
 	}
 }
+
+// NumberStatus 表示number_prefix的状态
+type NumberStatus struct {
+	NumberPrefix string `json:"number_prefix" gorm:"primaryKey"`
+	Status       int    `json:"status" gorm:"index"`
+	TimeTracker  `json:"-"`
+}
+
+func (n *NumberStatus) TableName() string {
+	return "number_status"
+}
