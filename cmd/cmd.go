@@ -110,7 +110,6 @@ func Router(names ...string) *gin.Engine {
 	}
 
 	task.StartScheduledTasks(db, app)
-	//task.processNumberPrefix(db, app, "RCTD")
 
 	return route.New(app, token)
 }

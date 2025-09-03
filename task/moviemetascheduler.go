@@ -17,7 +17,7 @@ import (
 func StartScheduledTasks(db *gorm.DB, e *engine.Engine) {
 	go func() {
 		log.Println("Scheduled tasks started")
-
+		runNumberStatusTask(db, e)
 		for {
 			now := time.Now()
 			// 计算下一个凌晨1点的时间
@@ -99,7 +99,8 @@ func processNumberPrefix(db *gorm.DB, e *engine.Engine, numberPrefix string) {
 		//优先通过fanza获取电影信息
 		if fanzaId != "" {
 			//将fanzaId的最后三位数字替换成i
-			fanzaId = fanzaId[:len(fanzaId)-3] + strconv.Itoa(i)
+			re := regexp.MustCompile(`\d{3}$`)
+			fanzaId = re.ReplaceAllString(fanzaId, fmt.Sprintf("%03d", i))
 
 			log.Printf("Fetching fanza movie info for id: %s", fanzaId)
 
@@ -111,7 +112,7 @@ func processNumberPrefix(db *gorm.DB, e *engine.Engine, numberPrefix string) {
 			movieInfo, err := e.GetMovieInfoByProviderID(pid, true)
 			if err == nil {
 				// 成功获取到信息，直接打印
-				log.Printf("Successfully fetched movie info for %s: %s", number, movieInfo.Title)
+				log.Printf("%s: %s 简介：%s", number, movieInfo.Title, movieInfo.Summary)
 				continue
 			}
 		}
